@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>243347400282-4r35gepas069mvij3o97ggimfr2vve1i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.243347400282-4r35gepas069mvij3o97ggimfr2vve1i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCkH7tRVyjIYfg7LNqGIqiRfQlHJScF5YM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>243347400282</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.sungla.frontend</string>
+	<key>PROJECT_ID</key>
+	<string>pokerlab-a253c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pokerlab-a253c.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:243347400282:ios:65414b3dea1ad70b279a63</string>
+</dict>
+</plist>
