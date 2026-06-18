@@ -584,29 +584,28 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
             ),
           ),
           const SizedBox(height: 6),
-          TextField(
+          SearchBar(
             onChanged: _filterPresets,
-            style: TextStyle(color: AppColors.textPrimary, fontSize: 13),
-            decoration: InputDecoration(
-              hintText: '搜尋預設範圍... (如 QQ+, Pocket, 10%)',
-              hintStyle: TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.5), fontSize: 12),
-              prefixIcon: Icon(Icons.search, color: AppColors.textSecondary, size: 16),
-              filled: true,
-              fillColor: AppColors.cardBackground,
-              contentPadding: const EdgeInsets.symmetric(vertical: 8),
-              border: OutlineInputBorder(
+            hintText: '搜尋預設範圍... (如 QQ+, Pocket, 10%)',
+            hintStyle: WidgetStatePropertyAll(
+              TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.5), fontSize: 12),
+            ),
+            textStyle: WidgetStatePropertyAll(
+              TextStyle(color: AppColors.textPrimary, fontSize: 13),
+            ),
+            leading: Icon(Icons.search, color: AppColors.textSecondary, size: 18),
+            backgroundColor: WidgetStatePropertyAll(AppColors.cardBackground),
+            elevation: const WidgetStatePropertyAll(0),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: AppColors.border),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: AppColors.border),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppColors.primary),
+                side: BorderSide(color: AppColors.border),
               ),
             ),
+            padding: const WidgetStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: 12),
+            ),
+            constraints: const BoxConstraints(minHeight: 40, maxHeight: 40),
           ),
           const SizedBox(height: 8),
 
