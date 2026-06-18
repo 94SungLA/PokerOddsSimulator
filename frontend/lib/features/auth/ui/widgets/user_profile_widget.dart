@@ -12,6 +12,7 @@ class UserProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -45,8 +46,8 @@ class UserProfileWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         user.displayName ?? '未指定名稱',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -82,7 +83,7 @@ class UserProfileWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   user.email ?? '無電子郵件',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 12.5,
                   ),

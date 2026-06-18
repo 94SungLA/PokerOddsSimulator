@@ -30,6 +30,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final settings = ref.watch(settingsProvider);
     final settingsNotifier = ref.read(settingsProvider.notifier);
     final userState = ref.watch(authProvider);
@@ -93,7 +94,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text(
+                  Text(
                     '增加次數可提高勝率精準度，但可能增加計算耗時。',
                     style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
                   ),
@@ -101,18 +102,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   DropdownButtonFormField<int>(
                     value: settings.simulationsCount,
                     dropdownColor: AppColors.surface,
-                    style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
+                    style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: AppColors.cardBackground,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.border),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.border),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                     ),
                     items: const [
@@ -194,25 +195,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text(
+                  Text(
                     '本機模擬預設為 http://127.0.0.1:8000/api/v1',
                     style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
                   ),
                   const SizedBox(height: 12),
                   TextField(
                     controller: _urlController,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: AppColors.cardBackground,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.border),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.border),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -238,7 +239,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       }
                       settingsNotifier.setApiUrl(url);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('API 連線設定已儲存並生效'), backgroundColor: AppColors.surface),
+                        SnackBar(content: Text('API 連線設定已儲存並生效', style: TextStyle(color: AppColors.textPrimary)), backgroundColor: AppColors.surface),
                       );
                     },
                     child: const Text('更新連線網址', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5)),
@@ -257,7 +258,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       padding: const EdgeInsets.only(left: 8, bottom: 8, top: 4),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: AppColors.textSecondary,
           fontSize: 10.5,
           fontWeight: FontWeight.bold,

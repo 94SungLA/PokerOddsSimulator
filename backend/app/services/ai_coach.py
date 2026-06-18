@@ -58,7 +58,8 @@ class AICoachService:
             f"1. 勝率解讀 (Equity Interpretation)：解讀目前的勝率狀況與領先/落後形勢。\n"
             f"2. 對手範圍強度 (Opponent Range Strength)：評估對手可能做出的牌型強度。\n"
             f"3. 潛在風險與警訊 (Risk Factors)：警示聽牌、成牌或被反超的危險因素。\n"
-            f"4. 新手策略建議 (Beginner-Friendly Advice)：給新手的具體行動指引（過牌/跟注/下注/棄牌）。"
+            f"4. 新手策略建議 (Beginner-Friendly Advice)：給新手的具體行動指引（過牌/跟注/下注/棄牌）。\n\n"
+            f"【要求】請極度精簡，總字數控制在300字以內，切中要點，以提升回覆速度。"
         )
 
         # Prioritize the hardcoded key in self.api_key, fall back to environment variable if empty
@@ -67,9 +68,9 @@ class AICoachService:
             masked_key = (api_key[:12] + "..." + api_key[-6:]) if len(api_key) > 18 else "short_or_invalid"
             print(f"[Gemini API] 啟動請求，目前使用的金鑰為: {masked_key}")
             models_to_try = [
+                "gemini-2.5-flash-lite",
                 "gemini-2.5-flash",
-                "gemini-1.5-flash-latest",
-                "gemini-1.5-pro-latest",
+                "gemini-2.0-flash-lite",
             ]
             
             headers = {"Content-Type": "application/json"}
@@ -83,7 +84,7 @@ class AICoachService:
                 ],
                 "generationConfig": {
                     "temperature": 0.3,
-                    "maxOutputTokens": 8192
+                    "maxOutputTokens": 800
                 }
             }
 
@@ -91,7 +92,7 @@ class AICoachService:
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
                 print(f"[Gemini API] 嘗試使用模型: {model}")
                 try:
-                    response = httpx.post(url, json=payload, headers=headers, timeout=25.0)
+                    response = httpx.post(url, json=payload, headers=headers, timeout=60.0)
                     if response.status_code == 200:
                         data = response.json()
                         text = data["candidates"][0]["content"]["parts"][0]["text"]

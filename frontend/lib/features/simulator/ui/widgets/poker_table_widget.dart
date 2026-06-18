@@ -10,6 +10,7 @@ class PokerTableWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AppColors.setTheme(context);
     final state = ref.watch(tableStateProvider);
     final notifier = ref.read(tableStateProvider.notifier);
 
@@ -45,7 +46,7 @@ class PokerTableWidget extends ConsumerWidget {
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Text(
             '對手手牌 (OPPONENTS - $count)',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.textSecondary,
               fontSize: 10.5,
               fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class PokerTableWidget extends ConsumerWidget {
                 children: [
                   Text(
                     'P$opponentIndex',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 10.5,
                       fontWeight: FontWeight.bold,
@@ -160,7 +161,7 @@ class PokerTableWidget extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
+          Text(
             '公共牌 (COMMUNITY CARDS)',
             style: TextStyle(
               color: AppColors.textSecondary,

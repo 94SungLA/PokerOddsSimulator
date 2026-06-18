@@ -14,12 +14,13 @@ class CardPickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final suits = ['s', 'h', 'd', 'c'];
     final ranks = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.surface,
         border: Border(
           top: BorderSide(color: AppColors.border, width: 1.0),
@@ -37,7 +38,7 @@ class CardPickerWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 '選擇卡牌 (CHOOSE CARD)',
                 style: TextStyle(
                   color: AppColors.textPrimary,
@@ -102,8 +103,8 @@ class CardPickerWidget extends StatelessWidget {
     switch (suit) {
       case 's':
         symbol = '♠';
-        color = Colors.white;
-        bgColor = const Color(0xFF1E293B);
+        color = AppColors.suitBlack;
+        bgColor = const Color(0xFF10B981).withValues(alpha: 0.1); // Same bg as clubs
         break;
       case 'h':
         symbol = '♥';
@@ -156,6 +157,7 @@ class _CardPickerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final color = card.isRed ? AppColors.suitRed : AppColors.suitBlack;
     final symbol = card.suitSymbol;
 
@@ -167,13 +169,13 @@ class _CardPickerTile extends StatelessWidget {
           width: 32,
           height: 44,
           decoration: BoxDecoration(
-            color: isUsed ? AppColors.disabledCard : Colors.white,
+            color: isUsed ? AppColors.disabledCard : (Theme.of(context).brightness == Brightness.dark ? AppColors.cardBackground : Colors.white),
             borderRadius: BorderRadius.circular(6),
             border: Border.all(
-              color: isUsed ? AppColors.border : Colors.grey.shade200,
+              color: isUsed ? AppColors.border : (Theme.of(context).brightness == Brightness.dark ? AppColors.border : Colors.grey.shade200),
               width: 1.0,
             ),
-            boxShadow: isUsed
+            boxShadow: isUsed || Theme.of(context).brightness == Brightness.dark
                 ? []
                 : [
                     BoxShadow(

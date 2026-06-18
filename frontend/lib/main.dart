@@ -32,28 +32,33 @@ class MyApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: settings.themeMode,
-      home: authState.when(
-        data: (user) {
-          if (user == null) {
-            return const LoginPage();
-          }
-          return const MainNavigationPage();
-        },
-        loading: () => const Scaffold(
-          backgroundColor: AppColors.background,
-          body: Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          ),
-        ),
-        error: (err, stack) => Scaffold(
-          backgroundColor: AppColors.background,
-          body: Center(
-            child: Text(
-              '登入初始化失敗: $err',
-              style: const TextStyle(color: AppColors.loseColor, fontWeight: FontWeight.bold),
+      home: Builder(
+        builder: (context) {
+          AppColors.setTheme(context);
+          return authState.when(
+            data: (user) {
+              if (user == null) {
+                return const LoginPage();
+              }
+              return const MainNavigationPage();
+            },
+            loading: () => Scaffold(
+              backgroundColor: AppColors.background,
+              body: const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              ),
             ),
-          ),
-        ),
+            error: (err, stack) => Scaffold(
+              backgroundColor: AppColors.background,
+              body: Center(
+                child: Text(
+                  '登入初始化失敗: $err',
+                  style: const TextStyle(color: AppColors.loseColor, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

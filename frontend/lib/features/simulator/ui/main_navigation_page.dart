@@ -12,6 +12,7 @@ class MainNavigationPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AppColors.setTheme(context);
     final selectedIndex = ref.watch(navigationTabProvider);
 
     final List<Widget> pages = [

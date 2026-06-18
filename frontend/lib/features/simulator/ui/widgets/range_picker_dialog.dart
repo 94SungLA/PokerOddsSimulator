@@ -112,29 +112,31 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
     final controller = TextEditingController(text: _rangeController.text);
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
+      builder: (ctx) {
+        AppColors.setTheme(ctx);
+        return AlertDialog(
+          backgroundColor: AppColors.surface,
+          surfaceTintColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
         ),
-        title: const Text(
+        title: Text(
           '自訂手牌範圍 (Custom Range)',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
+            Text(
               '請輸入標準手牌標記，例如: QQ+, AK, AQs+, 22+',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: controller,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
               decoration: InputDecoration(
                 hintText: '例如: JJ+, AQs+, AKo',
                 hintStyle: TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.5), fontSize: 13),
@@ -143,7 +145,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: AppColors.border),
+                  borderSide: BorderSide(color: AppColors.border),
                 ),
               ),
             ),
@@ -152,7 +154,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('取消', style: TextStyle(color: AppColors.textSecondary)),
+            child: Text('取消', style: TextStyle(color: AppColors.textSecondary)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -171,12 +173,14 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
             child: const Text('確認', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final state = ref.watch(tableStateProvider);
     final notifier = ref.read(tableStateProvider.notifier);
     final hand = state.opponentHands[widget.opponentIndex - 1];
@@ -205,7 +209,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
     }
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
@@ -242,14 +246,14 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
                   children: [
                     Text(
                       '對手 P${widget.opponentIndex} 設定',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close, color: AppColors.textSecondary),
+                      icon: Icon(Icons.close, color: AppColors.textSecondary),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -388,7 +392,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
                         ),
                       ),
                     ] else ...[
-                      const Icon(
+                      Icon(
                         Icons.add,
                         color: AppColors.textSecondary,
                         size: 20,
@@ -400,7 +404,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
             );
           }),
         ),
-        const Divider(color: AppColors.border, height: 16),
+        Divider(color: AppColors.border, height: 16),
         Expanded(
           child: _buildMiniCardPicker(usedCards, (card) {
             final slot = TableSlot(
@@ -468,8 +472,8 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
     switch (suit) {
       case 's':
         symbol = '♠';
-        color = Colors.white;
-        bgColor = const Color(0xFF1E293B);
+        color = AppColors.suitBlack;
+        bgColor = const Color(0xFF10B981).withValues(alpha: 0.1); // Same bg as clubs
         break;
       case 'h':
         symbol = '♥';
@@ -517,7 +521,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 '強手牌比例 (Percentile):',
                 style: TextStyle(
                   color: AppColors.textSecondary,
@@ -571,7 +575,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
           ),
           const SizedBox(height: 4),
 
-          const Text(
+          Text(
             '快捷範圍選擇與搜尋 (Presets Search):',
             style: TextStyle(
               color: AppColors.textSecondary,
@@ -582,21 +586,21 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
           const SizedBox(height: 6),
           TextField(
             onChanged: _filterPresets,
-            style: const TextStyle(color: Colors.white, fontSize: 13),
+            style: TextStyle(color: AppColors.textPrimary, fontSize: 13),
             decoration: InputDecoration(
               hintText: '搜尋預設範圍... (如 QQ+, Pocket, 10%)',
               hintStyle: TextStyle(color: AppColors.textSecondary.withValues(alpha: 0.5), fontSize: 12),
-              prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary, size: 16),
+              prefixIcon: Icon(Icons.search, color: AppColors.textSecondary, size: 16),
               filled: true,
               fillColor: AppColors.cardBackground,
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppColors.border),
+                borderSide: BorderSide(color: AppColors.border),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: AppColors.border),
+                borderSide: BorderSide(color: AppColors.border),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -610,7 +614,7 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
             child: _isLoadingPresets
                 ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
                 : _filteredPresets.isEmpty
-                    ? const Center(child: Text('無符合的範圍預設', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)))
+                    ? Center(child: Text('無符合的範圍預設', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)))
                     : ListView.builder(
                         itemCount: _filteredPresets.length,
                         itemBuilder: (context, idx) {
@@ -628,8 +632,8 @@ class _RangePickerDialogState extends ConsumerState<RangePickerDialog> with Sing
                             ),
                             child: ListTile(
                               dense: true,
-                              title: Text(preset.name, style: TextStyle(color: isSelected ? AppColors.primary : Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
-                              subtitle: Text(preset.description, style: const TextStyle(color: AppColors.textSecondary, fontSize: 11)),
+                              title: Text(preset.name, style: TextStyle(color: isSelected ? AppColors.primary : AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 13)),
+                              subtitle: Text(preset.description, style: TextStyle(color: AppColors.textSecondary, fontSize: 11)),
                               trailing: Text(preset.rangeStr, style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 11)),
                               onTap: () {
                                 _onPresetSelected(preset.rangeStr);
@@ -694,6 +698,7 @@ class _CardPickerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final color = card.isRed ? AppColors.suitRed : AppColors.suitBlack;
     final symbol = card.suitSymbol;
 
@@ -705,12 +710,21 @@ class _CardPickerTile extends StatelessWidget {
           width: 28,
           height: 38,
           decoration: BoxDecoration(
-            color: isUsed ? AppColors.disabledCard : Colors.white,
+            color: isUsed ? AppColors.disabledCard : (Theme.of(context).brightness == Brightness.dark ? AppColors.cardBackground : Colors.white),
             borderRadius: BorderRadius.circular(4),
             border: Border.all(
-              color: isUsed ? AppColors.border : Colors.grey.shade200,
+              color: isUsed ? AppColors.border : (Theme.of(context).brightness == Brightness.dark ? AppColors.border : Colors.grey.shade200),
               width: 1.0,
             ),
+            boxShadow: isUsed || Theme.of(context).brightness == Brightness.dark
+                ? []
+                : [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1.5),
+                    )
+                  ],
           ),
           child: Stack(
             children: [

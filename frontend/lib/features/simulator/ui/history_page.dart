@@ -12,6 +12,7 @@ class HistoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AppColors.setTheme(context);
     final historyState = ref.watch(historyProvider);
 
     return Scaffold(
@@ -64,7 +65,7 @@ class HistoryPage extends ConsumerWidget {
             color: AppColors.textSecondary.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             '尚無歷史計算紀錄',
             style: TextStyle(
               color: AppColors.textPrimary,
@@ -73,7 +74,7 @@ class HistoryPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
+          Text(
             '執行勝率計算後，結果將會自動記錄在此處',
             style: TextStyle(
               color: AppColors.textSecondary,
@@ -153,7 +154,7 @@ class _HistoryCardItem extends ConsumerWidget {
             children: [
               Text(
                 dateStr,
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.textSecondary,
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -167,7 +168,7 @@ class _HistoryCardItem extends ConsumerWidget {
                 ),
                 child: Text(
                   '${record.opponentRanges.length + 1} 人對局',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -185,7 +186,7 @@ class _HistoryCardItem extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Hero 手牌',
                     style: TextStyle(color: AppColors.textSecondary, fontSize: 10, fontWeight: FontWeight.bold),
                   ),
@@ -202,13 +203,13 @@ class _HistoryCardItem extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       '公共牌',
                       style: TextStyle(color: AppColors.textSecondary, fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
                     record.communityCards.isEmpty
-                        ? const Padding(
+                        ? Padding(
                             padding: EdgeInsets.symmetric(vertical: 4),
                             child: Text(
                               'Pre-flop',
@@ -328,13 +329,13 @@ class _HistoryCardItem extends ConsumerWidget {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
         surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: const BorderSide(color: AppColors.border)),
-        title: const Text('確認刪除', style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
-        content: const Text('您確定要永久刪除此筆勝率計算紀錄嗎？', style: TextStyle(color: AppColors.textSecondary)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: AppColors.border)),
+        title: Text('確認刪除', style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
+        content: Text('您確定要永久刪除此筆勝率計算紀錄嗎？', style: TextStyle(color: AppColors.textSecondary)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('取消', style: TextStyle(color: AppColors.textSecondary)),
+            child: Text('取消', style: TextStyle(color: AppColors.textSecondary)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -348,7 +349,7 @@ class _HistoryCardItem extends ConsumerWidget {
                 await ref.read(historyProvider.notifier).deleteRecord(id);
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('已成功刪除紀錄'), backgroundColor: AppColors.surface),
+                    SnackBar(content: Text('已成功刪除紀錄', style: TextStyle(color: AppColors.textPrimary)), backgroundColor: AppColors.surface),
                   );
                 }
               } catch (e) {
@@ -412,8 +413,8 @@ class _HistoryCardItem extends ConsumerWidget {
     ref.read(navigationTabProvider.notifier).state = 0;
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('已成功載入模擬數據至牌桌！'),
+      SnackBar(
+        content: Text('已成功載入模擬數據至牌桌！', style: TextStyle(color: AppColors.textPrimary)),
         backgroundColor: AppColors.surface,
         duration: Duration(seconds: 2),
       ),
@@ -428,6 +429,7 @@ class _MiniCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final card = CardModel.fromString(cardStr);
     final isRed = card.isRed;
     final color = isRed ? AppColors.suitRed : AppColors.suitBlack;

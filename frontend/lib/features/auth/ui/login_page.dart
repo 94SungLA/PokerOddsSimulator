@@ -54,18 +54,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
         ),
         title: Row(
           children: [
             const Icon(Icons.error_outline, color: AppColors.loseColor),
             const SizedBox(width: 10),
-            Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+            Text(title, style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 16)),
           ],
         ),
         content: Text(
           message,
-          style: const TextStyle(color: AppColors.textSecondary, fontSize: 13.5, height: 1.5),
+          style: TextStyle(color: AppColors.textSecondary, fontSize: 13.5, height: 1.5),
         ),
         actions: [
           TextButton(
@@ -79,6 +79,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final authState = ref.watch(authProvider);
     final isLoading = authState.isLoading || _isGoogleLoggingIn;
 
@@ -128,18 +129,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       color: AppColors.primary,
                     ),
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'PokerLab',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 32,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       '德州撲克勝率計算與策略學習工具\n(Texas Hold\'em Calculator)',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -161,11 +162,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Text(
+                          Text(
                             '登入以開始學習 (User Sign In)',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                               fontSize: 14.5,
                               fontWeight: FontWeight.bold,
                             ),
@@ -177,6 +178,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             backgroundColor: Colors.white,
                             foregroundColor: Colors.black,
                             elevation: 0,
+                            side: BorderSide(color: AppColors.border),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -207,7 +209,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           Row(
                             children: [
                               Expanded(child: Divider(color: AppColors.border, thickness: 1)),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 12),
                                 child: Text(
                                   '或 (OR)',
@@ -248,7 +250,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     const SizedBox(height: 32),
                     // Course Compliance Label
-                    const Text(
+                    Text(
                       '本登入模組符合學術課程期末專案合規需求\n支援 Firebase Core 與網頁驗證機制。',
                       textAlign: TextAlign.center,
                       style: TextStyle(

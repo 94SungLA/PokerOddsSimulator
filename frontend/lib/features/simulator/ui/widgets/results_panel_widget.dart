@@ -25,6 +25,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     // Watch hand evaluation results automatically
     final evaluationState = ref.watch(evaluationProvider);
 
@@ -44,7 +45,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 '模擬計算結果 (SIMULATION RESULTS)',
                 style: TextStyle(
                   color: AppColors.textPrimary,
@@ -55,7 +56,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
               ),
               Text(
                 '耗時 ${widget.result.elapsedTimeMs.toStringAsFixed(1)} ms',
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.textSecondary,
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
           const SizedBox(height: 6),
           Text(
             '基於 ${widget.result.simulationsRun.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} 次 Monte Carlo 模擬對局',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.textSecondary,
               fontSize: 10.5,
             ),
@@ -174,8 +175,8 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                     const SizedBox(height: 12),
                     _buildHandTypeDistribution(player),
                   ],
-                  const SizedBox(height: 8),
-                  const Divider(color: AppColors.border, height: 1),
+                  SizedBox(height: 8),
+                  Divider(color: AppColors.border, height: 1),
                 ],
               ),
             );
@@ -249,17 +250,17 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
           const SizedBox(height: 8),
           Text(
             evaluation.handStrengthSummary,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppColors.textPrimary,
               fontSize: 12.5,
               fontWeight: FontWeight.w500,
             ),
           ),
           if (evaluation.potentialImprovements.isNotEmpty) ...[
-            const SizedBox(height: 10),
-            const Divider(color: AppColors.border, height: 1),
+            SizedBox(height: 10),
+            Divider(color: AppColors.border, height: 1),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               '潛在改善聽牌 (Outs & Improvements):',
               style: TextStyle(
                 color: AppColors.textSecondary,
@@ -281,7 +282,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                           children: [
                             Text(
                               '${_translateHandType(imp.improvement)}: ',
-                              style: const TextStyle(color: AppColors.textPrimary, fontSize: 12, fontWeight: FontWeight.w500),
+                              style: TextStyle(color: AppColors.textPrimary, fontSize: 12, fontWeight: FontWeight.w500),
                             ),
                             Text(
                               '${imp.outs} 個 Outs',
@@ -291,7 +292,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                         ),
                         Text(
                           '${(imp.probability * 100).toStringAsFixed(1)}%',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
@@ -366,15 +367,15 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
               surfaceTintColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-                side: const BorderSide(color: AppColors.border),
+                side: BorderSide(color: AppColors.border),
               ),
-              title: const Row(
+              title: Row(
                 children: [
-                  Icon(Icons.psychology, color: AppColors.primary),
-                  SizedBox(width: 10),
+                  const Icon(Icons.psychology, color: AppColors.primary),
+                  const SizedBox(width: 10),
                   Text(
                     'AI 撲克教練策略解說',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],
               ),
@@ -388,20 +389,20 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                       child: MarkdownBody(
                         data: text,
                         selectable: false,
-                        styleSheet: MarkdownStyleSheet.fromTheme(AppTheme.darkTheme).copyWith(
-                          p: const TextStyle(
+                        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                          p: TextStyle(
                             color: AppColors.textPrimary,
                             fontSize: 13.5,
                             height: 1.6,
                           ),
-                          h1: const TextStyle(
-                            color: Colors.white,
+                          h1: TextStyle(
+                            color: AppColors.textPrimary,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             height: 1.6,
                           ),
-                          h2: const TextStyle(
-                            color: Colors.white,
+                          h2: TextStyle(
+                            color: AppColors.textPrimary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                             height: 1.6,
@@ -416,8 +417,8 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                             color: AppColors.primary,
                             fontSize: 13.5,
                           ),
-                          strong: const TextStyle(
-                            color: Colors.white,
+                          strong: TextStyle(
+                            color: AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
                           ),
                           blockSpacing: 10,
@@ -425,7 +426,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                       ),
                     );
                   },
-                  loading: () => const Column(
+                  loading: () => Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(height: 20),
@@ -528,7 +529,7 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             '可能牌型機率分佈 (HAND DISTRIBUTION)',
             style: TextStyle(
               color: AppColors.textSecondary,
@@ -551,14 +552,14 @@ class _ResultsPanelWidgetState extends ConsumerState<ResultsPanelWidget> {
                     children: [
                       Text(
                         _translateHandType(typeName),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.textPrimary,
                           fontSize: 12,
                         ),
                       ),
                       Text(
                         '${(probability * 100).toStringAsFixed(2)}%',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.textPrimary,
                           fontSize: 12,
                           fontWeight: FontWeight.bold,

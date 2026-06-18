@@ -13,6 +13,7 @@ class SimulatorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AppColors.setTheme(context);
     final state = ref.watch(tableStateProvider);
     final notifier = ref.read(tableStateProvider.notifier);
     final simState = ref.watch(simulationProvider);
@@ -82,14 +83,19 @@ class SimulatorPage extends ConsumerWidget {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
+        child: GestureDetector(
+          onTap: () {
+            notifier.selectSlot(null);
+          },
+          behavior: HitTestBehavior.translucent,
+          child: Column(
+            children: [
             // Controls (Players Count chips)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     '玩家人數:',
                     style: TextStyle(
                       color: AppColors.textSecondary,
@@ -140,9 +146,18 @@ class SimulatorPage extends ConsumerWidget {
 
             // Scrollable Poker Table felt
             Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  notifier.clearTable();
+                  ref.read(simulationProvider.notifier).reset();
+                  // Optional: add a tiny delay for smooth animation
+                  await Future.delayed(const Duration(milliseconds: 300));
+                },
+                color: AppColors.primary,
+                backgroundColor: AppColors.surface,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  child: Column(
                   children: [
                     const PokerTableWidget(),
                     const SizedBox(height: 18),
@@ -216,17 +231,25 @@ class SimulatorPage extends ConsumerWidget {
                 ),
               ),
             ),
+            ),
 
             // Card Picker Widget
-            CardPickerWidget(
-              usedCards: usedCards,
-              onCardSelected: isLoading
-                  ? (_) {}
-                  : (card) {
-                      notifier.setCardForActiveSlot(card);
-                    },
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubic,
+              child: state.selectedSlot != null
+                  ? CardPickerWidget(
+                      usedCards: usedCards,
+                      onCardSelected: isLoading
+                          ? (_) {}
+                          : (card) {
+                              notifier.setCardForActiveSlot(card);
+                            },
+                    )
+                  : const SizedBox(width: double.infinity),
             ),
           ],
+        ),
         ),
       ),
     );
@@ -252,7 +275,7 @@ class SimulatorPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 18),
-          const Text(
+          Text(
             '正在執行 10,000 次 Monte Carlo 模擬...',
             style: TextStyle(
               color: AppColors.textPrimary,
@@ -261,7 +284,7 @@ class SimulatorPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
+          Text(
             '系統正在隨機補齊剩餘卡牌並計算各玩家贏面',
             style: TextStyle(
               color: AppColors.textSecondary,

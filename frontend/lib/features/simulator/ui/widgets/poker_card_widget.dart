@@ -23,6 +23,7 @@ class PokerCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppColors.setTheme(context);
     final hasCard = card != null;
     final isSmall = width < 50;
 

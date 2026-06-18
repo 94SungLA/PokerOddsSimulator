@@ -98,7 +98,7 @@ class TableState {
 class TableNotifier extends StateNotifier<TableState> {
   TableNotifier() : super(TableState.initial());
 
-  void selectSlot(TableSlot slot) {
+  void selectSlot(TableSlot? slot) {
     state = state.copyWith(selectedSlot: () => slot);
   }
 
